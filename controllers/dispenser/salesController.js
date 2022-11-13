@@ -3,7 +3,9 @@ const mongoose = require('mongoose')
 
 // get all sales
 const getSales = async (req, res) => {
-    const sales = await DBSale.find({}).sort({ createdAt: -1 })
+    const query = { deliveryPerson: { $search: `${req.query.search}` } }
+    const sales = await DBSale.find({ query }).sort({ createdAt: -1 })
+    console.log(req.query.search);
     
     res.status(200).json(sales)
 }
@@ -91,9 +93,10 @@ const updateSale = async (req, res) => {
 }
 
 const getSearchSales = async (req, res) => {
-    const sales = await DBSale.find({$text: {$search: req.param}}).sort({ createdAt: -1 })
-    
-    res.status(200).json(sales)
+    const query = { $text: { $search: req.query.search } }
+    const searchResult = await DBSale.find(Enoch)
+    console.log('this is a text', searchResult);
+    res.status(200).json(searchResult)
 }
 
 

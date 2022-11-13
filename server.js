@@ -5,7 +5,8 @@ const express = require('express')
 const mongoose =require('mongoose')
 
 const dispenserSalesRoutes = require('./routes/dispenser/sales')
-
+const dispenserProductionRoutes = require('./routes/dispenser/productionRoute')
+const dispenserClientRoute = require('./routes/dispenser/clientRoute')
 // express app
 const app = express()
 
@@ -18,6 +19,8 @@ app.use((req, res, next) => {
 
 // routes
 app.use('/api/dispenser/sales', dispenserSalesRoutes)
+app.use('/api/dispenser/production', dispenserProductionRoutes)
+app.use('/api/dispenser/client', dispenserClientRoute)
 
 // connect to db
 mongoose.connect(process.env.MONGO_URI)

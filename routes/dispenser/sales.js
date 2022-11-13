@@ -28,7 +28,7 @@ router.delete('/:id', deleteSale)
 router.patch('/:id', updateSale)
 
 // UPDATE dispenser sale
-router.get('/:params', getSearchSales)
+router.get('/', getSearchSales)
 
 
 module.exports = router
