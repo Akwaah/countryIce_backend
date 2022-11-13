@@ -5,7 +5,7 @@ const {
     getClient,
     deleteClient,
     updateClient,
-} = require('../../controllers/dispenser/ClientController')
+} = require('../../controllers/dispenser/clientController')
 
 // const DBSale = require('../../models/dispenser/salesModel')
 
