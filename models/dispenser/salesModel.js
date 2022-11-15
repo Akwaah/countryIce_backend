@@ -39,9 +39,10 @@ const salesSchema = new Schema({
         type: String,
         required: true
             },
-            deliveryDate: {
-        type: String,
-        required: true
+    deliveryDate: {
+                type: Date,
+        default: Date.now(),
+        
             },
     deliveryInfos: {
                 type: Array

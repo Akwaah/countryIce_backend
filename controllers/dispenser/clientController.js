@@ -61,7 +61,7 @@ const deleteClient = async (req, res) => {
         return res.status(404).json({error: 'No such Clients'})
     }
     
-    const Clients = await ClientModel.findOneAndDelete({_id: id})
+    const Clients = await clientModel.findOneAndDelete({_id: id})
 
     if (!Clients) {
         return res.status(404).json({error: 'No such Client'})
@@ -78,7 +78,7 @@ const updateClient = async (req, res) => {
         return res.status(404).json({error: 'No such Clients'})
     }
     
-    const Clients = await ClientModel.findOneAndUpdate({_id: id}, {
+    const Clients = await clientModel.findOneAndUpdate({_id: id}, {
             ...req.body
         })
 
