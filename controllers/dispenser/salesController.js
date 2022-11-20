@@ -3,9 +3,28 @@ const mongoose = require('mongoose')
 
 // get all sales
 const getSales = async (req, res) => {
-    const query = { deliveryPerson: { $search: `${req.query.search}` } }
-    const sales = await DBSale.find({ query }).sort({ createdAt: -1 })
-    console.log(req.query.search);
+    const search = req.query.search || "";
+    let month = req.query.month || "All";
+
+    const monthOptions = [
+        "January",
+        "February",
+        "march",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+    ]
+    const sales = await DBSale.find({
+        deliveryPerson: { $regex: search, $options: "i" },
+        // deliveryData: { $regex: search, $options: "i" }
+    }).sort({ createdAt: -1 })
+    // console.log(query);
     
     res.status(200).json(sales)
 }
