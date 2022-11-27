@@ -1,6 +1,6 @@
 const DBSale = require('../../models/dispenser/salesModel')
 const mongoose = require('mongoose')
-
+const moment = require('moment');
 // get all sales
 const getSales = async (req, res) => {
     const search = req.query.search || "";
@@ -29,12 +29,27 @@ const getSales = async (req, res) => {
     res.status(200).json(sales)
 }
 
+const getTotalSales = async (req, res) => {
+    const TotalSales = await DBSale.find()
+
+    const totals=[]
+    TotalSales.forEach(item => {
+        totals.push(item.totalPaid)
+    });
+
+    const totalValue = totals.reduce((a, b) => {
+        return a+b
+    })
+    
+    res.status(200).json(totalValue);
+}
+
 // get single sales
 const getSale = async (req, res) => {
     const { id } = req.params
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(404).json({error: 'No such sales'})
+        return res.status(404).json({error: 'No such sale'})
     }
     
     const sales = await DBSale.findById(id)
@@ -111,11 +126,37 @@ const updateSale = async (req, res) => {
     res.status(200).json(sales)
 }
 
-const getSearchSales = async (req, res) => {
-    const query = { $text: { $search: req.query.search } }
-    const searchResult = await DBSale.find(Enoch)
-    console.log('this is a text', searchResult);
-    res.status(200).json(searchResult)
+const getMonthlyTotalSales = async (req, res) => {
+    const months = ["January","February","March","April","May","June","July",
+            "August","September","October","November","December"];
+    // const query = { $text: { $search: req.query.search } }
+    const monthlyTotals =[]
+    const searchResult = await DBSale.find()
+   
+    searchResult.forEach(item => {
+        monthlyTotals.push({
+            date: moment(item.deliveryDate).format('M'),
+            revenue: item.totalPaid
+        })
+    });
+    const y = []
+
+    let totalsales = monthlyTotals.reduce((acc, {
+  date,
+  revenue
+}) => {
+  acc[date] = (acc[date] || 0) + revenue;
+  return acc;
+}, {});
+
+totalsales = Object.entries(totalsales)
+.sort((a, b) => a[0] - b[0])
+.map((v) => ({ ...v, date: moment(v[0]).format('MMMM'), totalRevenue: v[1] }))
+
+console.log(totalsales)
+
+     console.log('this is a text', monthlyTotals);
+    res.status(200).json(totalsales)
 }
 
 
@@ -126,5 +167,6 @@ module.exports = {
     getSale,
     deleteSale,
     updateSale,
-    getSearchSales
+    getMonthlyTotalSales,
+    getTotalSales
 }

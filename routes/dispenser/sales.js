@@ -5,7 +5,8 @@ const {
     getSale,
     deleteSale,
     updateSale,
-    getSearchSales
+    getMonthlyTotalSales,
+    getTotalSales
 } = require('../../controllers/dispenser/salesController')
 
 // const DBSale = require('../../models/dispenser/salesModel')
@@ -16,19 +17,21 @@ const router = express.Router()
 router.get('/', getSales)
 
 // GET single dispenser sales
-router.get('/:id', getSale)
+router.get('/s/:id', getSale)
 
 // POST new dispenser sale
 router.post('/', createSales)
 
 // DELETE single dispenser sale
-router.delete('/:id', deleteSale)
+router.delete('/d/:id', deleteSale)
 
 // UPDATE dispenser sale
-router.patch('/:id', updateSale)
+router.patch('/u/:id', updateSale)
 
 // UPDATE dispenser sale
-router.get('/', getSearchSales)
+router.get('/mt/monthly-totals/', getMonthlyTotalSales)
+
+router.all('/t', getTotalSales)
 
 
 module.exports = router

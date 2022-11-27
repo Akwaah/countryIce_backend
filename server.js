@@ -23,7 +23,7 @@ app.use((req, res, next) => {
 })
 
 // routes
-app.use('/api/dispenser/sales', dispenserSalesRoutes)
+app.use('/api/dispenser/sales/', dispenserSalesRoutes)
 app.use('/api/dispenser/production', dispenserProductionRoutes)
 app.use('/api/dispenser/client', dispenserClientRoute)
 app.use('/api/dispenser/expense', dispenserExpenseRoute)
