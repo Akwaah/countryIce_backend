@@ -31,7 +31,7 @@ router.patch('/u/:id', updateSale)
 // UPDATE dispenser sale
 router.get('/mt/monthly-totals/', getMonthlyTotalSales)
 
-router.all('/t', getTotalSales)
+router.get('/t', getTotalSales)
 
 
 module.exports = router
