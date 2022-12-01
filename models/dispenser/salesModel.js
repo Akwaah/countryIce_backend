@@ -40,7 +40,7 @@ const salesSchema = new Schema({
         required: true
             },
     deliveryDate: {
-                type: Date,
+                type: String,
         default: Date.now(),
         
             },
