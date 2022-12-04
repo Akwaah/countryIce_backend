@@ -41,7 +41,10 @@ const getTotalSales = async (req, res) => {
         return a+b
     })
     
-    res.status(200).json(totalValue);
+    res.status(200).json({
+        title: 'Total Sales',
+        amount: totalValue,
+    });
 }
 
 // get single sales
@@ -136,26 +139,31 @@ const getMonthlyTotalSales = async (req, res) => {
     searchResult.forEach(item => {
         monthlyTotals.push({
             date: moment(item.deliveryDate).format('M'),
+            year:  moment(item.deliveryDate).format('YYYY'),
             revenue: item.totalPaid
         })
     });
     const y = []
+    console.log('this is a text', monthlyTotals);
 
     let totalsales = monthlyTotals.reduce((acc, {
-  date,
-  revenue
+        year,
+        date,
+        revenue
 }) => {
-  acc[date] = (acc[date] || 0) + revenue;
+        acc[date] =(acc[date] || 0) + (acc[year] || 0) + revenue;
+        console.log('this is acc',  acc);
   return acc;
-}, {});
-
+} ,{});
+console.log('totalSales before',totalsales)
 totalsales = Object.entries(totalsales)
-.sort((a, b) => a[0] - b[0])
-.map((v) => ({ ...v, date: moment(v[0]).format('MMMM'), totalRevenue: v[1] }))
+.sort((a, b) =>  a[0] - b[0])
+.map((v) => ({ date: moment(v[0]).format('MMMM'), totalRevenue: v[1], year: v[2] }))
 
-console.log(totalsales)
 
-     console.log('this is a text', monthlyTotals);
+
+    
+    console.log('totalSales',totalsales)
     res.status(200).json(totalsales)
 }
 
