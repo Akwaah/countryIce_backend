@@ -5,7 +5,8 @@ const {
     getProduction,
     deleteProduction,
     updateProduction,
-    getSearchProductions
+    getMonthlyTotalProduction,
+    getTotalProduction
 } = require('../../controllers/dispenser/productionController')
 
 // const DBSale = require('../../models/dispenser/salesModel')
@@ -16,19 +17,20 @@ const router = express.Router()
 router.get('/', getProductions)
 
 // GET single dispenser sales
-router.get('/:id', getProduction)
+router.get('/s/:id', getProduction)
 
 // POST new dispenser sale
 router.post('/', createProduction)
 
 // DELETE single dispenser sale
-router.delete('/:id', deleteProduction)
+router.delete('/d/:id', deleteProduction)
 
 // UPDATE dispenser sale
-router.patch('/:id', updateProduction)
+router.patch('/u/:id', updateProduction)
 
 // UPDATE dispenser sale
-router.get('/', getSearchProductions)
+router.get('/mt/monthly-totals/', getMonthlyTotalProduction)
 
+router.get('/t', getTotalProduction)
 
 module.exports = router

@@ -23,7 +23,7 @@ const getSales = async (req, res) => {
     const sales = await DBSale.find({
         deliveryPerson: { $regex: search, $options: "i" },
         // deliveryData: { $regex: search, $options: "i" }
-    }).sort({ createdAt: -1 })
+    }).sort({ deliveryDate: -1 })
     // console.log(query);
     
     res.status(200).json(sales)
@@ -134,12 +134,12 @@ const getMonthlyTotalSales = async (req, res) => {
             "August","September","October","November","December"];
     // const query = { $text: { $search: req.query.search } }
     const monthlyTotals =[]
-    const searchResult = await DBSale.find()
+    const searchResult = await DBSale.find().sort({ deliveryDate: 1 })
    
     searchResult.forEach(item => {
         monthlyTotals.push({
-            date: moment(item.deliveryDate).format('M'),
-            year:  moment(item.deliveryDate).format('YYYY'),
+            year: moment(item.deliveryDate).format('yyyy'),
+            date:  moment(item.deliveryDate).format('M'),
             revenue: item.totalPaid
         })
     });
@@ -150,15 +150,15 @@ const getMonthlyTotalSales = async (req, res) => {
         year,
         date,
         revenue
-}) => {
-        acc[date] =(acc[date] || 0) + (acc[year] || 0) + revenue;
+}) => { console.log('this is b4 acc',  year);
+        acc[date +'/'+'1'+'/'+ year] =(acc[date +'/'+'1'+'/'+ year] || 0)  + revenue ;
         console.log('this is acc',  acc);
   return acc;
 } ,{});
 console.log('totalSales before',totalsales)
 totalsales = Object.entries(totalsales)
-.sort((a, b) =>  a[0] - b[0])
-.map((v) => ({ date: moment(v[0]).format('MMMM'), totalRevenue: v[1], year: v[2] }))
+// .sort((a, b) =>  moment(a[0]).format('MYYYY') - moment(b[0]).format('MYYYY') )
+.map((v) => ({ date: moment(v[0]).format('MMMM YYYY'), totalRevenue: v[1] }))
 
 
 
