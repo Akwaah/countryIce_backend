@@ -17,10 +17,14 @@ const app = express()
 app.use(express.json())
 app.use(cors());
 
-// app.use((req, res, next) => {
-//     console.log(req.path, req.method)
-//     next()
-// })
+app.use((req, res, next) => {
+    console.log(req.path, req.method)
+    next()
+})
+
+// app.get('*', async function (request, reply) {
+//     return reply.sendFile('index.html')
+//   })
 
 // routes
 app.use('/api/dispenser/sales/', dispenserSalesRoutes)
