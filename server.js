@@ -5,6 +5,9 @@ const express = require('express')
 
 const mongoose =require('mongoose')
 
+// Blog
+const blogRoutes = require('./routes/blog/blogRoute')
+
 // Dispenser
 const dispenserSalesRoutes = require('./routes/dispenser/sales')
 const dispenserProductionRoutes = require('./routes/dispenser/productionRoute')
@@ -14,6 +17,7 @@ const staffRoute = require('./routes/general/staffRoute')
 
 // Sachet
 const sachetSalesRoutes = require('./routes/sachet/salesRoute')
+
 
 // express app
 const app = express()
@@ -34,6 +38,9 @@ app.use(express.json())
 //   })
 
 // ROUTES
+// Blog
+app.use('/api/blog', blogRoutes)
+
 // Dispenser
 app.use('/api/dispenser/sales/', dispenserSalesRoutes)
 app.use('/api/dispenser/production', dispenserProductionRoutes)

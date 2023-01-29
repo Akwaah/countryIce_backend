@@ -9,7 +9,8 @@ const creditorDetailsSchema = new Schema({
         },
         creditAmount: {
             type: Number,
-            required: false
+            required: false,
+            default: 0
         },
 })
 
@@ -20,7 +21,8 @@ const payeeDetailsSchema = new Schema({
         },
         amount: {
             type: Number,
-            required: false
+            required: false,
+            default: 0
         }
 })
 
@@ -109,10 +111,28 @@ const salesSchema = new Schema({
     creditsOwed: {
         type: Array
     },
-    creditorDetails: {
-        type: creditorDetailsSchema,
+    creditorName: {
+        type: String,
         required: false
     },
+    creditAmount: {
+        type: Number,
+        required: false,
+        default: 0
+    },
+payeeName: {
+        type: String,
+        required: false
+    },
+    amount: {
+        type: Number,
+        required: false,
+        default: 0
+    },
+    // creditorDetails: {
+    //     type: creditorDetailsSchema,
+    //     required: false
+    // },
     TotalCreditOwed: {
         type: Number,
         required: false
@@ -122,10 +142,10 @@ const salesSchema = new Schema({
     creditsPaid: {
         type: Array
     },
-    payeeDetails: {
-            type: payeeDetailsSchema,
-            required: false
-    },
+    // payeeDetails: {
+    //         type: payeeDetailsSchema,
+    //         required: false
+    // },
     totalCreditPaid: {
         type: Number,
         required: false
